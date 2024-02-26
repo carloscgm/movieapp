@@ -68,6 +68,8 @@ class _FullScreenMovieListPageState extends State<FullScreenMovieListPage> {
                     child: CircularProgressIndicator(),
                   );
                 } else {
+                  _myList = state.nextList;
+                  loading = false;
                   splitMoviesInColumns();
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,13 +100,13 @@ class _FullScreenMovieListPageState extends State<FullScreenMovieListPage> {
     for (int i = 0; i < _myList.length; i++) {
       switch (i % 3) {
         case 0:
-          _column1List.add(widget.list[i]);
+          _column1List.add(_myList[i]);
           break;
         case 1:
-          _column2List.add(widget.list[i]);
+          _column2List.add(_myList[i]);
           break;
         case 2:
-          _column3List.add(widget.list[i]);
+          _column3List.add(_myList[i]);
           break;
       }
     }

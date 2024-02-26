@@ -12,3 +12,9 @@ class SearchByQuery extends SearchBlocEvent {
 class CleanSearch extends SearchBlocEvent {
   CleanSearch();
 }
+
+class AddSearched extends SearchBlocEvent {
+  final String searched;
+
+  AddSearched({required this.searched});
+}

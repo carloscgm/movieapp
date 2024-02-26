@@ -29,41 +29,42 @@ class _MovieListPageState extends State<MovieListPage>
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: BlocBuilder<MovieBloc, MovieState>(
+        child: BlocBuilder<MovieBloc, MovieState>(
             builder: (context, state) {
               if (state.popularMovieList.isNotEmpty &&
                   state.topRatedMovieList.isNotEmpty &&
                   state.popularTVList.isNotEmpty &&
                   state.topRatedTVList.isNotEmpty &&
                   state.upcomingList.isNotEmpty) {
-                return Column(
-                  children: [
-                    CustomWidthPosterSlider(movieList: state.upcomingList),
-                    const SizedBox(height: AppDimens.mediumMargin),
-                    HorizontalListViewMovies(
-                        list: state.popularMovieList,
-                        title: 'Películas populares',
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CustomWidthPosterSlider(movieList: state.upcomingList),
+                      const SizedBox(height: AppDimens.mediumMargin),
+                      HorizontalListViewMovies(
+                          list: state.popularMovieList,
+                          title: 'Películas populares',
+                          listType:
+                              MovieListType(status: TypeListMovie.MOVIE_POPULAR)),
+                      HorizontalListViewMovies(
+                        list: state.topRatedMovieList,
+                        title: 'Películas Mejor valoradas',
                         listType:
-                            MovieListType(status: TypeListMovie.MOVIE_POPULAR)),
-                    HorizontalListViewMovies(
-                      list: state.topRatedMovieList,
-                      title: 'Películas Mejor valoradas',
-                      listType:
-                          MovieListType(status: TypeListMovie.MOVIE_TOPRATED),
-                    ),
-                    HorizontalListViewMovies(
-                      list: state.topRatedTVList,
-                      title: 'Series Mejor valoradas',
-                      listType:
-                          MovieListType(status: TypeListMovie.TV_TOPRATED),
-                    ),
-                    HorizontalListViewMovies(
-                      list: state.popularTVList,
-                      title: 'Popular',
-                      listType: MovieListType(status: TypeListMovie.TV_POPULAR),
-                    ),
-                  ],
+                            MovieListType(status: TypeListMovie.MOVIE_TOPRATED),
+                      ),
+                      HorizontalListViewMovies(
+                        list: state.topRatedTVList,
+                        title: 'Series Mejor valoradas',
+                        listType:
+                            MovieListType(status: TypeListMovie.TV_TOPRATED),
+                      ),
+                      HorizontalListViewMovies(
+                        list: state.popularTVList,
+                        title: 'Popular',
+                        listType: MovieListType(status: TypeListMovie.TV_POPULAR),
+                      ),
+                    ],
+                  ),
                 );
               } else {
                 return const Center(
@@ -72,7 +73,6 @@ class _MovieListPageState extends State<MovieListPage>
               }
             },
           ),
-        ),
       ),
     );
   }

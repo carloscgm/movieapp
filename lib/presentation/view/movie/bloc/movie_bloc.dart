@@ -51,7 +51,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
   void blocFetchNext(FetchNext event, Emitter<MovieState> emit) async {
     List<PostableItem> result =
-        await movieUseCase.getNext(event.id, event.type);
+        await movieUseCase.getNext(event.page, event.type);
     if (state.nextList.isNotEmpty) {
       result = state.nextList + result;
     }
@@ -147,8 +147,8 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     add(FetchTVDetailCasting(id: id));
   }
 
-  void fetchNext(int id, MovieListType type) {
-    add(FetchNext(id: id, type: type));
+  void fetchNext(int page, MovieListType type) {
+    add(FetchNext(page: page, type: type));
   }
 
   void moveMoviesToNext(MovieListType type) {

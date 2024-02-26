@@ -47,10 +47,10 @@ class FetchTVDetailCasting extends MovieEvent {
 }
 
 class FetchNext extends MovieEvent {
-  final int id;
+  final int page;
   final MovieListType type;
 
-  FetchNext({required this.type, required this.id});
+  FetchNext({required this.type, required this.page});
 }
 
 class MoveMoviesToNext extends MovieEvent {

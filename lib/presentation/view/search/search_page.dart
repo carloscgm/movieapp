@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
+import 'package:movieapp/presentation/view/search/bloc/search_bloc.dart';
 import 'package:movieapp/presentation/view/search/delegate/search_delegate_movie.dart';
 
 class SearchPage extends StatefulWidget {
@@ -30,23 +32,22 @@ class _SearchPageState extends State<SearchPage>
         child: Padding(
           padding: const EdgeInsets.all(AppDimens.mediumMargin),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Más buscados',
+                'Tus últimas buscadas',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5),
-                  itemCount: 7,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      color: Colors.amber,
-                      width: 100,
-                      height: 100,
+                child: BlocBuilder<SearchBloc, SearchBlocState>(
+                  builder: (context, state) {
+                    return ListView.builder(
+                      itemCount: state.lastSearches.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(state.lastSearches[index]),
+                        );
+                      },
                     );
                   },
                 ),

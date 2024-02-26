@@ -51,6 +51,7 @@ class SearchMovieDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    context.read<SearchBloc>().addNewSearched(query);
     final ScrollController scrollController = ScrollController();
     scrollController.addListener(
       () {
