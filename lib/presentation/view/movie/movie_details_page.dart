@@ -46,10 +46,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
           break;
         case Status.COMPLETED:
           //LoadingOverlay.hide();
-          setState(() {
-            _myMovie = state.data;
-            initLoading = false;
-          });
+          if (mounted) {
+            setState(() {
+              _myMovie = state.data;
+              initLoading = false;
+            });
+          }
           break;
         case Status.ERROR:
           LoadingOverlay.hide();
@@ -72,21 +74,17 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             id: widget.idMovie,
             title: widget.title,
             backdropPath: widget.backdropPath,
-            posterPath: widget.posterPath,
-            heroMode: widget.heroMode,
-          )
+            posterPath: widget.posterPath)
         : Scaffold(
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   CarruselAndTitle(
-                    id: _myMovie.id,
-                    title: _myMovie.title,
-                    backdropPath: _myMovie.backdropPath,
-                    posterPath: _myMovie.posterPath,
-                    releaseDate: _myMovie.releaseDate,
-                    heroMode: true,
-                  ),
+                      id: _myMovie.id,
+                      title: _myMovie.title,
+                      backdropPath: _myMovie.backdropPath,
+                      posterPath: _myMovie.posterPath,
+                      releaseDate: _myMovie.releaseDate),
                   const SizedBox(height: AppDimens.mediumMargin),
                   VoteSection(
                     voteAverage: _myMovie.voteAverage,
@@ -145,6 +143,7 @@ class Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: AppDimens.mediumMargin),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +154,9 @@ class Description extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            _myMovie.overview,
+            _myMovie.overview.isEmpty
+                ? 'Sin descripción disponible'
+                : _myMovie.overview,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

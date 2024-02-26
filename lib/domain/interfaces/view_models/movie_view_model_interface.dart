@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:movieapp/domain/interfaces/usecases/movie_use_case_interface.dart';
 import 'package:movieapp/domain/interfaces/view_models/base_view_model_interface.dart';
+import 'package:movieapp/presentation/utils/constants/type_movie_list.dart';
 import 'package:movieapp/presentation/utils/state/resource_state.dart';
 
 abstract interface class MovieViewModelInterface implements BaseViewModel {
@@ -48,4 +49,5 @@ abstract interface class MovieViewModelInterface implements BaseViewModel {
   Future<void> fetchTvTopRated(int page);
   Future<void> fetchTVDetail(int idTv);
   Future<void> fetchTVDetailCasting(int idTv);
+  Future<void> fetchNext(int page, MovieListType type);
 }

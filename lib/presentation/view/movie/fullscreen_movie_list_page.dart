@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:movieapp/di/app_modules.dart';
-import 'package:movieapp/domain/interfaces/view_models/movie_view_model_interface.dart';
 import 'package:movieapp/domain/entities/posterable_item.dart';
+import 'package:movieapp/domain/interfaces/view_models/movie_view_model_interface.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/utils/constants/type_movie_list.dart';
 import 'package:movieapp/presentation/utils/state/resource_state.dart';
@@ -12,7 +14,9 @@ class FullScreenMovieListPage extends StatefulWidget {
   final List<PostableItem> list;
   final MovieListType listType;
   const FullScreenMovieListPage(
-      {super.key, required this.list, required this.listType});
+      {super.key,
+      required this.list,
+      required this.listType});
 
   @override
   State<FullScreenMovieListPage> createState() =>
@@ -21,7 +25,7 @@ class FullScreenMovieListPage extends StatefulWidget {
 
 class _FullScreenMovieListPageState extends State<FullScreenMovieListPage> {
   final _movieViewModel = inject<MovieViewModelInterface>();
-  List<PostableItem> _myMovieList = List.empty(growable: true);
+  List<PostableItem> _myList = List.empty(growable: true);
   List<PostableItem> _column1List = List.empty(growable: true);
   List<PostableItem> _column2List = List.empty(growable: true);
   List<PostableItem> _column3List = List.empty(growable: true);
@@ -30,9 +34,15 @@ class _FullScreenMovieListPageState extends State<FullScreenMovieListPage> {
   bool loading = false;
 
   @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
-    _myMovieList = widget.list;
+    _myList = widget.list;
     splitMoviesInColumns();
 
     _scrollController.addListener(() {
@@ -41,14 +51,14 @@ class _FullScreenMovieListPageState extends State<FullScreenMovieListPage> {
           !loading) {
         _currentPage++;
         loading = true;
-        _movieViewModel.fetchNextPopular(_currentPage);
+        widget.requestNextPage(_currentPage);
       }
     });
 
-    _movieViewModel.moviePopularListState.stream.listen((state) {
+    widget.streamControllerType.stream.listen((state) {
       switch (state.status) {
         case Status.COMPLETED:
-          _myMovieList.addAll(state.data);
+          _myList.addAll(state.data);
           splitMoviesInColumns();
           loading = false;
           setState(() {});
@@ -95,7 +105,7 @@ class _FullScreenMovieListPageState extends State<FullScreenMovieListPage> {
     _column1List = [];
     _column2List = [];
     _column3List = [];
-    for (int i = 0; i < _myMovieList.length; i++) {
+    for (int i = 0; i < _myList.length; i++) {
       switch (i % 3) {
         case 0:
           _column1List.add(widget.list[i]);

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/di/app_modules.dart';
 import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/navigation/navigation_routes.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
+import 'package:movieapp/presentation/view/search/bloc/search_bloc_bloc.dart';
 
 void main() {
   AppModules().setup(); // Setup dependency injection
-  runApp(const MyApp());
+
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => inject<SearchBloc>()),
+    ],
+    child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

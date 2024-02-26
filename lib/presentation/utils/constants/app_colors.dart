@@ -28,4 +28,12 @@ class AppColors {
       return const Color.fromARGB(255, 28, 28, 28);
     }
   }
+
+  static Color getSearchFieldColor(BuildContext context) {
+    if (MediaQuery.of(context).platformBrightness == Brightness.light) {
+      return const Color.fromARGB(255, 28, 28, 28);
+    } else {
+      return const Color.fromARGB(255, 233, 233, 233);
+    }
+  }
 }

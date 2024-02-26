@@ -57,15 +57,18 @@ class HorizontalListViewMovies extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Hero(
-                        tag: 'poster-${list[index].id}',
-                        child: CustomPosterMovie(
-                          title: list[index].title,
-                          backdropPath: list[index].backdropPath,
-                          id: list[index].id,
-                          vote: list[index].voteAverage.toString(),
-                          posterPath: list[index].posterPath,
-                          typeItem: listType,
+                      HeroMode(
+                        enabled: list[index].backdropPath.isNotEmpty,
+                        child: Hero(
+                          tag: 'poster-${list[index].id}',
+                          child: CustomPosterMovie(
+                            title: list[index].title,
+                            backdropPath: list[index].backdropPath,
+                            id: list[index].id,
+                            vote: list[index].voteAverage.toString(),
+                            posterPath: list[index].posterPath,
+                            typeItem: listType,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 3),

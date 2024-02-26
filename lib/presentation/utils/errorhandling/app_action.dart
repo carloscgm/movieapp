@@ -11,4 +11,5 @@ enum AppAction {
   GET_TV_POPULAR,
   GET_TV_AIRING,
   GET_TV_ONTHEAIR,
+  SEARCH_BY_QUERY
 }

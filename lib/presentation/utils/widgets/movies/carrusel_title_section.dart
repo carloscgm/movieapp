@@ -8,7 +8,6 @@ class CarruselAndTitle extends StatelessWidget {
   final String backdropPath;
   final String posterPath;
   final DateTime? releaseDate;
-  final bool heroMode;
 
   const CarruselAndTitle({
     super.key,
@@ -17,7 +16,6 @@ class CarruselAndTitle extends StatelessWidget {
     required this.posterPath,
     this.releaseDate,
     required this.id,
-    required this.heroMode,
   });
 
   @override
@@ -27,12 +25,21 @@ class CarruselAndTitle extends StatelessWidget {
       children: [
         Column(
           children: [
-            Hero(
-              tag: 'backdrop-$id',
-              child: CachedNetworkImage(
-                imageUrl: backdropPath,
-                width: responsive.width,
-                height: responsive.width * 0.56,
+            HeroMode(
+              enabled: backdropPath.isNotEmpty,
+              child: Hero(
+                tag: 'backdrop-$id',
+                child: backdropPath.isNotEmpty
+                    ? CachedNetworkImage(
+                        imageUrl: backdropPath,
+                        width: responsive.width,
+                        height: responsive.width * 0.56,
+                      )
+                    : Container(
+                        width: responsive.width,
+                        height: responsive.width * 0.56,
+                        color: Colors.grey[200],
+                      ),
               ),
             ),
             Container(

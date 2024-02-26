@@ -39,8 +39,8 @@ class _MovieListPageState extends State<MovieListPage>
     setUpStreamTVTopRated();
 
     _movieViewModel.fetchUpcoming();
-    _movieViewModel.fetchPopular();
-    _movieViewModel.fetchTopRated();
+    _movieViewModel.fetchNextPopular(1);
+    _movieViewModel.fetchNextTopRated(1);
     _movieViewModel.fetchTvPopular(1);
     _movieViewModel.fetchTvTopRated(1);
   }
@@ -57,10 +57,9 @@ class _MovieListPageState extends State<MovieListPage>
               CustomWidthPosterSlider(movieList: _upcomingMovieList),
               const SizedBox(height: AppDimens.mediumMargin),
               HorizontalListViewMovies(
-                list: _popularMovieList,
-                title: 'Películas populares',
-                listType: MovieListType(status: TypeListMovie.MOVIE_POPULAR),
-              ),
+                  list: _popularMovieList,
+                  title: 'Películas populares',
+                  listType: MovieListType(status: TypeListMovie.MOVIE_POPULAR)),
               HorizontalListViewMovies(
                 list: _topRatedMovieList,
                 title: 'Películas Mejor valoradas',

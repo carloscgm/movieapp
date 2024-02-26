@@ -50,12 +50,14 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
         case Status.COMPLETED:
           requestCount--;
           //LoadingOverlay.hide();
-          setState(() {
-            _myTv = state.data;
-            if (requestCount == 0) {
-              initLoading = false;
-            }
-          });
+          if (mounted) {
+            setState(() {
+              _myTv = state.data;
+              if (requestCount == 0) {
+                initLoading = false;
+              }
+            });
+          }
           break;
         case Status.ERROR:
           LoadingOverlay.hide();
@@ -105,20 +107,16 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
             id: widget.id,
             title: widget.title,
             backdropPath: widget.backdropPath,
-            posterPath: widget.posterPath,
-            heroMode: true,
-          )
+            posterPath: widget.posterPath)
         : Scaffold(
             body: Column(
               children: [
                 CarruselAndTitle(
-                  id: _myTv.id,
-                  title: _myTv.name,
-                  backdropPath: _myTv.backdropPath,
-                  posterPath: _myTv.posterPath,
-                  releaseDate: _myTv.firstAirDate,
-                  heroMode: true,
-                ),
+                    id: _myTv.id,
+                    title: _myTv.name,
+                    backdropPath: _myTv.backdropPath,
+                    posterPath: _myTv.posterPath,
+                    releaseDate: _myTv.firstAirDate),
                 const SizedBox(height: AppDimens.mediumMargin),
                 VoteSection(
                   voteAverage: _myTv.voteAverage,
@@ -127,8 +125,6 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
                 ),
                 const SizedBox(height: AppDimens.mediumMargin),
                 Expanded(child: TabSection(_myTv, _castingActors)),
-                Container(),
-                Container(),
               ],
             ),
             floatingActionButton: (_myTv.homepage.isEmpty)
@@ -274,10 +270,14 @@ class CustomSeasonSelector extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            CachedNetworkImage(
-              imageUrl: urlImage,
-              fit: BoxFit.fill,
-            ),
+            urlImage.isNotEmpty
+                ? CachedNetworkImage(
+                    imageUrl: urlImage,
+                    fit: BoxFit.fill,
+                  )
+                : Container(
+                    color: Colors.grey[200],
+                  ),
             Container(
               color: Colors.black38.withOpacity(0.5),
             ),
@@ -294,6 +294,7 @@ class CustomSeasonSelector extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     subtitle,
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ],
@@ -321,7 +322,9 @@ class _FirstSection extends StatelessWidget {
           Container(
             margin: const EdgeInsets.all(AppDimens.mediumMargin),
             child: Text(
-              myTv.overview,
+              myTv.overview.isNotEmpty
+                  ? myTv.overview
+                  : 'Sin descripción disponible',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -363,10 +366,6 @@ class _FirstSection extends StatelessWidget {
         ),
         ListTile(
           leading: leadingWidget,
-          trailing: const Icon(
-            Icons.arrow_forward_ios_outlined,
-            size: 15,
-          ),
           title: Text(title, style: Theme.of(context).textTheme.bodySmall),
           subtitle: Text('$seasonEpisode · $date'),
         ),
@@ -378,14 +377,17 @@ class _FirstSection extends StatelessWidget {
 Widget imageBackdropStyle(String url, BuildContext context) {
   final responsive = MediaQuery.of(context).size;
   if (url.isEmpty) {
-    return Container();
+    return const SizedBox(width: 0, height: 0);
   } else {
     return Container(
       width: responsive.width * 0.25,
       decoration: AppStyles.getDecorationPoster(),
       child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: CachedNetworkImage(imageUrl: url)),
+          child: CachedNetworkImage(
+            imageUrl: url,
+            fit: BoxFit.fill,
+          )),
     );
   }
 }

@@ -28,7 +28,7 @@ class CustomWidthPosterSlider extends StatelessWidget {
           margin: const EdgeInsets.only(
               left: AppDimens.mediumMargin, top: AppDimens.mediumMargin),
           child: Text(
-            'Por llegar',
+            'Películas por llegar',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),

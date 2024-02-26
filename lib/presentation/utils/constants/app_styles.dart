@@ -8,7 +8,7 @@ class AppStyles {
     primarySwatch: Colors.blue,
     useMaterial3: true,
   ).copyWith(
-    hintColor: const Color.fromARGB(255, 233, 233, 233),
+    //hintColor: const Color.fromARGB(255, 233, 233, 233),
     textTheme: TextTheme(
       headlineSmall: GoogleFonts.lato(
           textStyle: const TextStyle(
@@ -47,7 +47,7 @@ class AppStyles {
     primarySwatch: Colors.blue,
     useMaterial3: true,
   ).copyWith(
-    hintColor: const Color.fromARGB(255, 28, 28, 28),
+    //hintColor: const Color.fromARGB(255, 28, 28, 28),
     textTheme: TextTheme(
       headlineSmall: GoogleFonts.lato(
           textStyle: const TextStyle(

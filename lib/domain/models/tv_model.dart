@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tvModel = tvModelFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:movieapp/domain/entities/tv_entity.dart';
@@ -75,7 +71,7 @@ class TvModel extends TvEntity implements PostableItem {
 
   factory TvModel.fromJson(Map<String, dynamic> json) => TvModel(
         adult: json["adult"],
-        backdropPath: 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}',
+        backdropPath: json["backdrop_path"] != null ? 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}' : '',
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         originCountry: List<String>.from(json["origin_country"].map((x) => x)),
