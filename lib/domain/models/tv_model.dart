@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:movieapp/domain/entities/tv_entity.dart';
 import 'package:movieapp/domain/entities/posterable_item.dart';
+import 'package:movieapp/domain/entities/tv_entity.dart';
 
 TvModel tvModelFromJson(String str) => TvModel.fromJson(json.decode(str));
 
@@ -29,7 +29,7 @@ class TvModel extends TvEntity implements PostableItem {
   @override
   final String posterPath;
   @override
-  final DateTime firstAirDate;
+  final DateTime? firstAirDate;
   @override
   final String name;
   @override
@@ -48,7 +48,7 @@ class TvModel extends TvEntity implements PostableItem {
     required this.overview,
     required this.popularity,
     required this.posterPath,
-    required this.firstAirDate,
+    this.firstAirDate,
     required this.name,
     required this.voteAverage,
     required this.voteCount,
@@ -71,7 +71,9 @@ class TvModel extends TvEntity implements PostableItem {
 
   factory TvModel.fromJson(Map<String, dynamic> json) => TvModel(
         adult: json["adult"],
-        backdropPath: json["backdrop_path"] != null ? 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}' : '',
+        backdropPath: json["backdrop_path"] != null
+            ? 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}'
+            : '',
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         originCountry: List<String>.from(json["origin_country"].map((x) => x)),
@@ -79,8 +81,13 @@ class TvModel extends TvEntity implements PostableItem {
         originalName: json["original_name"],
         overview: json["overview"],
         popularity: json["popularity"]?.toDouble(),
-        posterPath: 'https://image.tmdb.org/t/p/w500${json["poster_path"]}',
-        firstAirDate: DateTime.parse(json["first_air_date"]),
+        posterPath: json["poster_path"] != null
+            ? 'https://image.tmdb.org/t/p/w500${json["poster_path"]}'
+            : '',
+        firstAirDate: json["first_air_date"] != null &&
+                json["first_air_date"].toString().isNotEmpty
+            ? DateTime.parse(json["first_air_date"])
+            : null,
         name: json["name"],
         voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
@@ -97,8 +104,9 @@ class TvModel extends TvEntity implements PostableItem {
         "overview": overview,
         "popularity": popularity,
         "poster_path": posterPath,
-        "first_air_date":
-            "${firstAirDate.year.toString().padLeft(4, '0')}-${firstAirDate.month.toString().padLeft(2, '0')}-${firstAirDate.day.toString().padLeft(2, '0')}",
+        "first_air_date": firstAirDate != null
+            ? "${firstAirDate!.year.toString().padLeft(4, '0')}-${firstAirDate!.month.toString().padLeft(2, '0')}-${firstAirDate!.day.toString().padLeft(2, '0')}"
+            : null,
         "name": name,
         "vote_average": voteAverage,
         "vote_count": voteCount,

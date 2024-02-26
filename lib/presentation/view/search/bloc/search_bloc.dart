@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:movieapp/domain/interfaces/usecases/search_use_case_interface.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 
-part 'search_bloc_event.dart';
-part 'search_bloc_state.dart';
+part 'search_event.dart';
+part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
   final SearchUseCaseInterface searchUseCase;

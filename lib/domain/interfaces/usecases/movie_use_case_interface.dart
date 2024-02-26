@@ -1,8 +1,10 @@
+import 'package:movieapp/domain/entities/posterable_item.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
 import 'package:movieapp/domain/models/tv_detail_model.dart';
 import 'package:movieapp/domain/models/tv_model.dart';
+import 'package:movieapp/presentation/utils/constants/type_movie_list.dart';
 
 abstract interface class MovieUseCaseInterface {
   Future<List<MovieModel>> getNowPlaying();
@@ -20,4 +22,5 @@ abstract interface class MovieUseCaseInterface {
   Future<List<TvModel>> getTVTopRated(int page);
   Future<TvDetailModel> getTvDetail(int idTv);
   Future<TvDetailCastingModel> getTvDetailCasting(int idTv);
+  Future<List<PostableItem>> getNext(int page, MovieListType type);
 }

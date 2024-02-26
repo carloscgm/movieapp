@@ -120,11 +120,11 @@ StatefulShellRoute homePageRoute() => StatefulShellRoute.indexedStack(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _aboutNavigatorKey,
+          navigatorKey: _searchNavigatorKey,
           routes: [
             GoRoute(
-              path: NavigationRoutes.aboutRoute,
-              parentNavigatorKey: _aboutNavigatorKey,
+              path: NavigationRoutes.searchRoute,
+              parentNavigatorKey: _searchNavigatorKey,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: SearchPage(),
               ),
@@ -132,11 +132,11 @@ StatefulShellRoute homePageRoute() => StatefulShellRoute.indexedStack(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _searchNavigatorKey,
+          navigatorKey: _aboutNavigatorKey,
           routes: [
             GoRoute(
-              path: NavigationRoutes.searchRoute,
-              parentNavigatorKey: _searchNavigatorKey,
+              path: NavigationRoutes.aboutRoute,
+              parentNavigatorKey: _aboutNavigatorKey,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: AboutPage(),
               ),

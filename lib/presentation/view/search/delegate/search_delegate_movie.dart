@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
-import 'package:movieapp/presentation/view/search/bloc/search_bloc_bloc.dart';
+import 'package:movieapp/presentation/view/search/bloc/search_bloc.dart';
 
 class SearchMovieDelegate extends SearchDelegate {
   SearchMovieDelegate();

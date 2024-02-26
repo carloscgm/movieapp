@@ -11,11 +11,10 @@ import 'package:movieapp/domain/interfaces/repositories/remote/search_remote_int
 import 'package:movieapp/domain/interfaces/repositories/search_repository_interface.dart';
 import 'package:movieapp/domain/interfaces/usecases/movie_use_case_interface.dart';
 import 'package:movieapp/domain/interfaces/usecases/search_use_case_interface.dart';
-import 'package:movieapp/domain/interfaces/view_models/movie_view_model_interface.dart';
 import 'package:movieapp/domain/usecases/movie_use_case_impl.dart';
 import 'package:movieapp/domain/usecases/search_use_case_impl.dart';
-import 'package:movieapp/presentation/view/movie/viewmodel/movie_view_model.dart';
-import 'package:movieapp/presentation/view/search/bloc/search_bloc_bloc.dart';
+import 'package:movieapp/presentation/view/movie/bloc/movie_bloc.dart';
+import 'package:movieapp/presentation/view/search/bloc/search_bloc.dart';
 
 final inject = GetIt.instance;
 
@@ -38,8 +37,8 @@ class AppModules {
         () => MovieRepositoryImpl(inject.get(), inject.get()));
     inject.registerFactory<MovieUseCaseInterface>(
         (() => MovieUseCaseImpl(inject.get())));
-    inject.registerFactory<MovieViewModelInterface>(
-        () => MovieViewModelImpl(inject.get()));
+    inject.registerFactory(
+        () => MovieBloc(inject.get()));
   }
 
   _setupSearchModule() {

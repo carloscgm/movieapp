@@ -1,18 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movieapp/di/app_modules.dart';
-import 'package:movieapp/domain/interfaces/view_models/movie_view_model_interface.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
 import 'package:movieapp/domain/models/tv_detail_model.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
-import 'package:movieapp/presentation/utils/state/resource_state.dart';
-import 'package:movieapp/presentation/utils/widgets/error/error_overlay.dart';
-import 'package:movieapp/presentation/utils/widgets/loading/loading_overlay.dart';
 import 'package:movieapp/presentation/utils/widgets/loading/loading_scaffold_hero.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/carrusel_title_section.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/title_chip_section.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/vote_section.dart';
+import 'package:movieapp/presentation/view/movie/bloc/movie_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TvDetailsPage extends StatefulWidget {
@@ -32,115 +29,58 @@ class TvDetailsPage extends StatefulWidget {
 }
 
 class _TvDetailsPageState extends State<TvDetailsPage> {
-  final _movieViewModel = inject<MovieViewModelInterface>();
-  late TvDetailModel _myTv;
-  late TvDetailCastingModel _castingActors;
-  bool initLoading = true;
-  int requestCount = 2;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _movieViewModel.tvDetailListState.stream.listen((state) {
-      switch (state.status) {
-        case Status.LOADING:
-          //LoadingOverlay.show(context);
-          break;
-        case Status.COMPLETED:
-          requestCount--;
-          //LoadingOverlay.hide();
-          if (mounted) {
-            setState(() {
-              _myTv = state.data;
-              if (requestCount == 0) {
-                initLoading = false;
-              }
-            });
-          }
-          break;
-        case Status.ERROR:
-          LoadingOverlay.hide();
-          ErrorOverlay.of(context).show(state.error, onRetry: () {
-            _movieViewModel.fetchTVDetail(widget.id);
-          });
-          break;
-        default:
-          LoadingOverlay.hide();
-          break;
-      }
-    });
-    _movieViewModel.tvDetailCastingListState.stream.listen((state) {
-      switch (state.status) {
-        case Status.LOADING:
-          //LoadingOverlay.show(context);
-          break;
-        case Status.COMPLETED:
-          requestCount--;
-          //LoadingOverlay.hide();
-          setState(() {
-            _castingActors = state.data;
-            if (requestCount == 0) {
-              initLoading = false;
-            }
-          });
-          break;
-        case Status.ERROR:
-          LoadingOverlay.hide();
-          ErrorOverlay.of(context).show(state.error, onRetry: () {
-            _movieViewModel.fetchTVDetailCasting(widget.id);
-          });
-          break;
-        default:
-          LoadingOverlay.hide();
-          break;
-      }
-    });
-    _movieViewModel.fetchTVDetail(widget.id);
-    _movieViewModel.fetchTVDetailCasting(widget.id);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return initLoading
-        ? LoadingScaffoldHero(
+    context.read<MovieBloc>().fetchTVDetail(widget.id);
+    context.read<MovieBloc>().fetchTVDetailCasting(widget.id);
+
+    return BlocBuilder<MovieBloc, MovieState>(builder: (context, state) {
+      if (state.tvDetails != null &&
+          widget.id == state.tvDetails!.id &&
+          state.tvDetailsCasting != null &&
+          state.tvDetailsCasting!.id == widget.id) {
+        return Scaffold(
+          body: Column(
+            children: [
+              CarruselAndTitle(
+                  id: state.tvDetails!.id,
+                  title: state.tvDetails!.name,
+                  backdropPath: state.tvDetails!.backdropPath,
+                  posterPath: state.tvDetails!.posterPath,
+                  releaseDate: state.tvDetails!.firstAirDate),
+              const SizedBox(height: AppDimens.mediumMargin),
+              VoteSection(
+                voteAverage: state.tvDetails!.voteAverage,
+                voteCount: state.tvDetails!.voteCount,
+                text: 'Califica esta serie',
+              ),
+              const SizedBox(height: AppDimens.mediumMargin),
+              Expanded(
+                  child: TabSection(state.tvDetails!, state.tvDetailsCasting!)),
+            ],
+          ),
+          floatingActionButton: (state.tvDetails!.homepage.isEmpty)
+              ? Container()
+              : FloatingActionButton.extended(
+                  onPressed: () {
+                    _launchURL(state.tvDetails!.homepage);
+                  },
+                  label: const Row(
+                    children: [
+                      Icon(Icons.play_circle_outline_outlined),
+                      SizedBox(width: 5),
+                      Text('Ver Serie')
+                    ],
+                  )),
+        );
+      } else {
+        return LoadingScaffoldHero(
             id: widget.id,
             title: widget.title,
             backdropPath: widget.backdropPath,
-            posterPath: widget.posterPath)
-        : Scaffold(
-            body: Column(
-              children: [
-                CarruselAndTitle(
-                    id: _myTv.id,
-                    title: _myTv.name,
-                    backdropPath: _myTv.backdropPath,
-                    posterPath: _myTv.posterPath,
-                    releaseDate: _myTv.firstAirDate),
-                const SizedBox(height: AppDimens.mediumMargin),
-                VoteSection(
-                  voteAverage: _myTv.voteAverage,
-                  voteCount: _myTv.voteCount,
-                  text: 'Califica esta serie',
-                ),
-                const SizedBox(height: AppDimens.mediumMargin),
-                Expanded(child: TabSection(_myTv, _castingActors)),
-              ],
-            ),
-            floatingActionButton: (_myTv.homepage.isEmpty)
-                ? Container()
-                : FloatingActionButton.extended(
-                    onPressed: () {
-                      _launchURL(_myTv.homepage);
-                    },
-                    label: const Row(
-                      children: [
-                        Icon(Icons.play_circle_outline_outlined),
-                        SizedBox(width: 5),
-                        Text('Ver Serie')
-                      ],
-                    )),
-          );
+            posterPath: widget.posterPath);
+      }
+    });
   }
 
   _launchURL(String url) async {

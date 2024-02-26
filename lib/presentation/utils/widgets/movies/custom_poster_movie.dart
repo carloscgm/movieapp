@@ -52,11 +52,15 @@ class CustomPosterMovie extends StatelessWidget {
             decoration: AppStyles.getDecorationPoster(),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: CachedNetworkImage(
-                  height: responsive.width * 0.3 * 1.5,
-                  width: responsive.width * 0.27,
-                  fit: BoxFit.fill,
-                  imageUrl: posterPath),
+              child: posterPath.isNotEmpty
+                  ? CachedNetworkImage(
+                      height: responsive.width * 0.3 * 1.5,
+                      width: responsive.width * 0.27,
+                      fit: BoxFit.fill,
+                      imageUrl: posterPath)
+                  : Container(
+                      color: Colors.grey[200],
+                    ),
             ),
           ),
           Positioned(

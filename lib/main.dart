@@ -4,7 +4,8 @@ import 'package:movieapp/di/app_modules.dart';
 import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/navigation/navigation_routes.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
-import 'package:movieapp/presentation/view/search/bloc/search_bloc_bloc.dart';
+import 'package:movieapp/presentation/view/movie/bloc/movie_bloc.dart';
+import 'package:movieapp/presentation/view/search/bloc/search_bloc.dart';
 
 void main() {
   AppModules().setup(); // Setup dependency injection
@@ -12,6 +13,7 @@ void main() {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(create: (context) => inject<SearchBloc>()),
+      BlocProvider(create: (context) => inject<MovieBloc>()),
     ],
     child: const MyApp()));
 }

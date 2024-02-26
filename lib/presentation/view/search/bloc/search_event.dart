@@ -1,4 +1,4 @@
-part of 'search_bloc_bloc.dart';
+part of 'search_bloc.dart';
 
 abstract class SearchBlocEvent {}
 
