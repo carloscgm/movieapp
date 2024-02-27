@@ -38,6 +38,9 @@ class _SearchPageState extends State<SearchPage>
                 'Tus últimas buscadas',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: BlocBuilder<SearchBloc, SearchBlocState>(
                   builder: (context, state) {

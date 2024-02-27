@@ -1,9 +1,9 @@
 {
-  "app_title": "Flutter MVVM",
+  "app_title": "Flutter MVC",
   "movie_title": "Movies",
   "artists_title": "Artists",
   "about_title": "About",
-  "about_description": "Flutter BLoC MVVM Example Project.\n\nDeveloped in {lang} following the {cleanArch} principles by Carlos Guillen.",
+  "about_description": "Flutter BLoC MVC Example Project.\n\nDeveloped in {lang} following the {cleanArch} principles by Carlos Guillen.",
   "sign_in": "Sign in",
   "sign_in_welcome_title": "Welcome!",
   "sign_in_welcome_subtitle": "Enter your user data to continue",

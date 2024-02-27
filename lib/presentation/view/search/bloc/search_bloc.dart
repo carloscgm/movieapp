@@ -41,9 +41,7 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
       emit(state.copyWith(searchResult: [], lastPageSearched: 0, query: ''));
     });
     on<AddSearched>((event, emit) async {
-      List<String> currentSearches = [];
-      currentSearches.addAll(state.lastSearches);
-      currentSearches.add(event.searched);
+      List<String> currentSearches = [event.searched] + state.lastSearches;
       emit(state.copyWith(lastSearches: currentSearches));
     });
   }
