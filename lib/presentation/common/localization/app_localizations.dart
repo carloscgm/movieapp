@@ -96,7 +96,7 @@ abstract class AppLocalizations {
   /// No description provided for @app_title.
   ///
   /// In en, this message translates to:
-  /// **'Flutter MVVM'**
+  /// **'Flutter MVC'**
   String get app_title;
 
   /// No description provided for @movie_title.
@@ -120,7 +120,7 @@ abstract class AppLocalizations {
   /// No description provided for @about_description.
   ///
   /// In en, this message translates to:
-  /// **'Flutter BLoC MVVM Example Project.\n\nDeveloped in {lang} following the {cleanArch} principles by Carlos Guillen.'**
+  /// **'Flutter BLoC MVC Example Project.\n\nDeveloped in {lang} following the {cleanArch} principles by Carlos Guillen.'**
   String about_description(Object cleanArch, Object lang);
 
   /// No description provided for @sign_in.

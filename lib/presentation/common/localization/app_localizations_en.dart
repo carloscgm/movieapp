@@ -5,7 +5,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get app_title => 'Flutter MVVM';
+  String get app_title => 'Flutter MVC';
 
   @override
   String get movie_title => 'Movies';
@@ -18,7 +18,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String about_description(Object cleanArch, Object lang) {
-    return 'Flutter BLoC MVVM Example Project.\n\nDeveloped in $lang following the $cleanArch principles by Carlos Guillen.';
+    return 'Flutter BLoC MVC Example Project.\n\nDeveloped in $lang following the $cleanArch principles by Carlos Guillen.';
   }
 
   @override

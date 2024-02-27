@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final movieDetailModel = movieDetailModelFromJson(jsonString);
-
 import 'dart:convert';
 
 MovieDetailModel movieDetailModelFromJson(String str) =>

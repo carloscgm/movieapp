@@ -99,4 +99,4 @@ flutter:
 flutter_native_splash:
   # After changing this config, run: flutter pub run flutter_native_splash:create
   color: "#ffffff"
-  image: assets/images/splash.png
+  image: assets/images/logo.png

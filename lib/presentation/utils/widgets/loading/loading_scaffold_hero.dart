@@ -6,15 +6,13 @@ class LoadingScaffoldHero extends StatelessWidget {
   final String title;
   final String backdropPath;
   final String posterPath;
-  final bool heroMode;
 
   const LoadingScaffoldHero(
       {super.key,
       required this.id,
       required this.title,
       required this.backdropPath,
-      required this.posterPath,
-      required this.heroMode});
+      required this.posterPath});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,6 @@ class LoadingScaffoldHero extends StatelessWidget {
           title: title,
           backdropPath: backdropPath,
           posterPath: posterPath,
-          heroMode: heroMode,
         ),
       ]),
     );

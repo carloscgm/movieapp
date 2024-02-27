@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/di/app_modules.dart';
-import 'package:movieapp/domain/interfaces/view_models/movie_view_model_interface.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
-import 'package:movieapp/presentation/utils/state/resource_state.dart';
-import 'package:movieapp/presentation/utils/widgets/error/error_overlay.dart';
-import 'package:movieapp/presentation/utils/widgets/loading/loading_overlay.dart';
 import 'package:movieapp/presentation/utils/widgets/loading/loading_scaffold_hero.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/carrusel_title_section.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/title_chip_section.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/vote_section.dart';
+import 'package:movieapp/presentation/view/movie/bloc/movie_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetailsPage extends StatefulWidget {
@@ -31,79 +28,40 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
-  final _movieViewModel = inject<MovieViewModelInterface>();
-  late MovieDetailModel _myMovie;
-  bool initLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _movieViewModel.movieDetailListState.stream.listen((state) {
-      switch (state.status) {
-        case Status.LOADING:
-          //LoadingOverlay.show(context);
-          break;
-        case Status.COMPLETED:
-          //LoadingOverlay.hide();
-          setState(() {
-            _myMovie = state.data;
-            initLoading = false;
-          });
-          break;
-        case Status.ERROR:
-          LoadingOverlay.hide();
-          ErrorOverlay.of(context).show(state.error, onRetry: () {
-            _movieViewModel.fetchMovieDetail(widget.idMovie);
-          });
-          break;
-        default:
-          LoadingOverlay.hide();
-          break;
-      }
-    });
-    _movieViewModel.fetchMovieDetail(widget.idMovie);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return initLoading
-        ? LoadingScaffoldHero(
-            id: widget.idMovie,
-            title: widget.title,
-            backdropPath: widget.backdropPath,
-            posterPath: widget.posterPath,
-            heroMode: widget.heroMode,
-          )
-        : Scaffold(
+    context.read<MovieBloc>().fetchMovieDetail(widget.idMovie);
+    return BlocBuilder<MovieBloc, MovieState>(
+      builder: (context, state) {
+        if (state.movieDetails != null && widget.idMovie == state.movieDetails!.id) {
+          return Scaffold(
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   CarruselAndTitle(
-                    id: _myMovie.id,
-                    title: _myMovie.title,
-                    backdropPath: _myMovie.backdropPath,
-                    posterPath: _myMovie.posterPath,
-                    releaseDate: _myMovie.releaseDate,
-                    heroMode: true,
-                  ),
+                      id: state.movieDetails!.id,
+                      title: state.movieDetails!.title,
+                      backdropPath: state.movieDetails!.backdropPath,
+                      posterPath: state.movieDetails!.posterPath,
+                      releaseDate: state.movieDetails!.releaseDate),
                   const SizedBox(height: AppDimens.mediumMargin),
                   VoteSection(
-                    voteAverage: _myMovie.voteAverage,
-                    voteCount: _myMovie.voteCount,
+                    voteAverage: state.movieDetails!.voteAverage,
+                    voteCount: state.movieDetails!.voteCount,
                     text: 'Califica esta película',
                   ),
                   const SizedBox(height: AppDimens.mediumMargin),
-                  Description(myMovie: _myMovie),
+                  Description(myMovie: state.movieDetails!),
                   const SizedBox(height: AppDimens.mediumMargin),
                   ChipTitleSection(
                     title: 'Géneros',
-                    chipListNames: _myMovie.genres.map((e) => e.name).toList(),
+                    chipListNames:
+                        state.movieDetails!.genres.map((e) => e.name).toList(),
                   ),
                   const SizedBox(height: AppDimens.mediumMargin),
                   ChipTitleSection(
                     title: 'Productoras',
-                    chipListNames: _myMovie.productionCompanies
+                    chipListNames: state.movieDetails!.productionCompanies
                         .map((e) => e.name)
                         .toList(),
                   ),
@@ -111,11 +69,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 ],
               ),
             ),
-            floatingActionButton: (_myMovie.homepage.isEmpty)
+            floatingActionButton: (state.movieDetails!.homepage.isEmpty)
                 ? Container()
                 : FloatingActionButton.extended(
                     onPressed: () {
-                      _launchURL(_myMovie.homepage);
+                      _launchURL(state.movieDetails!.homepage);
                     },
                     label: const Row(
                       children: [
@@ -125,6 +83,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                       ],
                     )),
           );
+        } else {
+          return LoadingScaffoldHero(
+              id: widget.idMovie,
+              title: widget.title,
+              backdropPath: widget.backdropPath,
+              posterPath: widget.posterPath);
+        }
+      },
+    );
   }
 
   _launchURL(String url) async {
@@ -145,6 +112,7 @@ class Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: AppDimens.mediumMargin),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +123,9 @@ class Description extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            _myMovie.overview,
+            _myMovie.overview.isEmpty
+                ? 'Sin descripción disponible'
+                : _myMovie.overview,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

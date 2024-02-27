@@ -1,12 +1,14 @@
 import 'package:movieapp/data/remote/error/remote_error_mapper.dart';
 import 'package:movieapp/data/remote/http_client.dart';
 import 'package:movieapp/data/remote/network_endpoints.dart';
+import 'package:movieapp/domain/entities/posterable_item.dart';
 import 'package:movieapp/domain/interfaces/repositories/remote/movie_remote_interface.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
 import 'package:movieapp/domain/models/tv_detail_model.dart';
 import 'package:movieapp/domain/models/tv_model.dart';
+import 'package:movieapp/presentation/utils/constants/type_movie_list.dart';
 
 class MovieRemoteImpl implements MovieRemoteInterface {
   final HttpClient _httpClient;
@@ -237,6 +239,44 @@ class MovieRemoteImpl implements MovieRemoteInterface {
       return TvDetailCastingModel.fromJson(response.data);
     } catch (e) {
       throw RemoteErrorMapper.getException(e);
+    }
+  }
+
+  @override
+  Future<List<PostableItem>> getNext(int page, MovieListType type) async {
+    try {
+      dynamic response = await _httpClient.dio.get(
+        endpointFiltered(type),
+        queryParameters: {'page': page},
+      );
+
+      if (type.status == TypeListMovie.MOVIE_POPULAR ||
+          type.status == TypeListMovie.MOVIE_TOPRATED) {
+        return response.data['results']
+          .map<MovieModel>((data) => MovieModel.fromJson(data))
+          .toList();
+      } else {
+        return response.data['results']
+          .map<TvModel>((data) => TvModel.fromJson(data))
+          .toList();
+      }
+    } catch (e) {
+      throw RemoteErrorMapper.getException(e);
+    }
+  }
+
+  String endpointFiltered(MovieListType type) {
+    switch (type.status) {
+      case TypeListMovie.MOVIE_POPULAR:
+        return NetworkEndpoints.popularMovies;
+      case TypeListMovie.MOVIE_TOPRATED:
+        return NetworkEndpoints.topRatedMovies;
+      case TypeListMovie.TV_TOPRATED:
+        return NetworkEndpoints.topRatedTv;
+      case TypeListMovie.TV_POPULAR:
+        return NetworkEndpoints.popularTv;
+      default:
+        return '';
     }
   }
 }

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tvDetailModel = tvDetailModelFromJson(jsonString);
-
 import 'dart:convert';
 
 TvDetailModel tvDetailModelFromJson(String str) =>
@@ -80,7 +76,9 @@ class TvDetailModel {
 
   factory TvDetailModel.fromJson(Map<String, dynamic> json) => TvDetailModel(
         adult: json["adult"],
-        backdropPath: 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}',
+        backdropPath: json["backdrop_path"] != null
+            ? 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}'
+            : '',
         createdBy: List<CreatedBy>.from(
             json["created_by"].map((x) => CreatedBy.fromJson(x))),
         episodeRunTime: List<int>.from(json["episode_run_time"].map((x) => x)),
@@ -168,14 +166,14 @@ class CreatedBy {
   final int id;
   final String creditId;
   final String name;
-  final int gender;
+  final int? gender;
   final String? profilePath;
 
   CreatedBy({
     required this.id,
     required this.creditId,
     required this.name,
-    required this.gender,
+    this.gender,
     this.profilePath,
   });
 
@@ -228,7 +226,7 @@ class LastEpisodeToAir {
   final int episodeNumber;
   final String episodeType;
   final String productionCode;
-  final int runtime;
+  final int? runtime;
   final int seasonNumber;
   final int showId;
   final String? stillPath;
@@ -243,7 +241,7 @@ class LastEpisodeToAir {
     required this.episodeNumber,
     required this.episodeType,
     required this.productionCode,
-    required this.runtime,
+    this.runtime,
     required this.seasonNumber,
     required this.showId,
     this.stillPath,

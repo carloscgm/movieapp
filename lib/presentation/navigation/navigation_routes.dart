@@ -1,13 +1,12 @@
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movieapp/presentation/view/about/about_page.dart';
-import 'package:movieapp/presentation/view/auth/login_page.dart';
 import 'package:movieapp/presentation/view/home/home_page.dart';
 import 'package:movieapp/presentation/view/movie/fullscreen_movie_list_page.dart';
 import 'package:movieapp/presentation/view/movie/movie_details_page.dart';
 import 'package:movieapp/presentation/view/movie/movie_list_page.dart';
 import 'package:movieapp/presentation/view/movie/tv_details_page.dart';
-import 'package:movieapp/presentation/view/splash/splash_page.dart';
-import 'package:go_router/go_router.dart';
+import 'package:movieapp/presentation/view/search/search_page.dart';
 
 typedef GKey = GlobalKey<NavigatorState>;
 
@@ -18,8 +17,7 @@ abstract interface class NavigationRoutes {
   static const String fullscreenPath = 'fullscreen';
 
   // Route names
-  static const String initialRoute = '/';
-  static const String loginRoute = '/login';
+  static const String searchRoute = '/search';
   static const String movieRoute = '/movies';
   static const String movieFullScreenRoute = '$movieRoute/$fullscreenPath';
   static const String DetailmovieFullScreenRoute =
@@ -35,22 +33,15 @@ abstract interface class NavigationRoutes {
 final GKey _rootNavigatorKey = GKey();
 final GKey _movieNavigatorKey = GKey();
 final GKey _aboutNavigatorKey = GKey();
+final GKey _searchNavigatorKey = GKey();
 
 final router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: NavigationRoutes.initialRoute,
+    initialLocation: NavigationRoutes.movieRoute,
     routes: [
       // Routes
-      initialRoute(),
       homePageRoute(),
-      loginPageRoute(),
     ]);
-
-GoRoute loginPageRoute() => GoRoute(
-      path: NavigationRoutes.loginRoute,
-      parentNavigatorKey: _rootNavigatorKey,
-      builder: (context, state) => const LoginPage(),
-    );
 
 StatefulShellRoute homePageRoute() => StatefulShellRoute.indexedStack(
       builder: (context, state, shell) => HomePage(navigationShell: shell),
@@ -129,6 +120,18 @@ StatefulShellRoute homePageRoute() => StatefulShellRoute.indexedStack(
           ],
         ),
         StatefulShellBranch(
+          navigatorKey: _searchNavigatorKey,
+          routes: [
+            GoRoute(
+              path: NavigationRoutes.searchRoute,
+              parentNavigatorKey: _searchNavigatorKey,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: SearchPage(),
+              ),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
           navigatorKey: _aboutNavigatorKey,
           routes: [
             GoRoute(
@@ -141,10 +144,4 @@ StatefulShellRoute homePageRoute() => StatefulShellRoute.indexedStack(
           ],
         )
       ],
-    );
-
-GoRoute initialRoute() => GoRoute(
-      path: NavigationRoutes.initialRoute,
-      parentNavigatorKey: _rootNavigatorKey,
-      builder: (context, state) => const SplashPage(),
     );

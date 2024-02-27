@@ -1,9 +1,9 @@
 {
-  "app_title": "Flutter MVVM",
+  "app_title": "Flutter MVC",
   "movie_title": "Peliculas",
   "artists_title": "Artistas",
   "about_title": "Acerca de",
-  "about_description": "Ejemplo de MVVM con Flutter BLoC.\n\nDesarrollado en lenguaje {lang} siguiendo los principios de {cleanArch} por Carlos Guillén.",
+  "about_description": "Ejemplo de MVC con Flutter BLoC.\n\nDesarrollado en lenguaje {lang} siguiendo los principios de {cleanArch} por Carlos Guillén.",
   "sign_in": "Iniciar sesión",
   "sign_in_welcome_title": "¡Bienvenid@!",
   "sign_in_welcome_subtitle": "Introduce tus datos de usuario para continuar",

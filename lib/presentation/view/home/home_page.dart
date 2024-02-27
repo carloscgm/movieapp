@@ -34,6 +34,10 @@ class _HomePageState extends State<HomePage> {
           icon: const Icon(Icons.play_circle_outline),
           label: AppLocalizations.of(context)!.movie_title,
         ),
+        const NavigationDestination(
+          icon: Icon(Icons.search_outlined),
+          label: 'Buscador',
+        ),
         NavigationDestination(
           icon: const Icon(Icons.info_outlined),
           label: AppLocalizations.of(context)!.about_title,

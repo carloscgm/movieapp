@@ -1,4 +1,5 @@
 import 'package:movieapp/data/cache/cache_memory.dart';
+import 'package:movieapp/domain/entities/posterable_item.dart';
 import 'package:movieapp/domain/interfaces/repositories/movie_repository_interface.dart';
 import 'package:movieapp/domain/interfaces/repositories/remote/movie_remote_interface.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
@@ -6,6 +7,7 @@ import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
 import 'package:movieapp/domain/models/tv_detail_model.dart';
 import 'package:movieapp/domain/models/tv_model.dart';
+import 'package:movieapp/presentation/utils/constants/type_movie_list.dart';
 
 class MovieRepositoryImpl implements MovieRepositoryInterface {
   final MovieRemoteInterface _remote;
@@ -175,5 +177,10 @@ class MovieRepositoryImpl implements MovieRepositoryInterface {
       _cache.tvDetailsCasting[idTv] = result;
       return result;
     }
+  }
+
+  @override
+  Future<List<PostableItem>> getNext(int page, MovieListType type) async {
+    return await _remote.getNext(page, type);
   }
 }
