@@ -1,4 +1,5 @@
 import 'package:movieapp/domain/entities/posterable_item.dart';
+import 'package:movieapp/domain/models/movie_detail_casting_model.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
@@ -22,5 +23,6 @@ abstract interface class MovieRemoteInterface {
   Future<List<TvModel>> getTVTopRated(int page);
   Future<TvDetailModel> getTvDetails(int idTv);
   Future<TvDetailCastingModel> getTvDetailsCasting(int idTv);
+  Future<MovieDetailCastingModel> getMovieDetailsCasting(int idTv);
   Future<List<PostableItem>> getNext(int page, MovieListType type);
 }

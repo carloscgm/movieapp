@@ -2,6 +2,7 @@ import 'package:movieapp/data/cache/cache_memory.dart';
 import 'package:movieapp/domain/entities/posterable_item.dart';
 import 'package:movieapp/domain/interfaces/repositories/movie_repository_interface.dart';
 import 'package:movieapp/domain/interfaces/repositories/remote/movie_remote_interface.dart';
+import 'package:movieapp/domain/models/movie_detail_casting_model.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
@@ -175,6 +176,17 @@ class MovieRepositoryImpl implements MovieRepositoryInterface {
     } else {
       final result = await _remote.getTvDetailsCasting(idTv);
       _cache.tvDetailsCasting[idTv] = result;
+      return result;
+    }
+  }
+
+  @override
+  Future<MovieDetailCastingModel> getMovieDetailCasting(int idMovie) async {
+    if (_cache.movieDetailsCasting.containsKey(idMovie)) {
+      return _cache.movieDetailsCasting[idMovie]!;
+    } else {
+      final result = await _remote.getMovieDetailsCasting(idMovie);
+      _cache.movieDetailsCasting[idMovie] = result;
       return result;
     }
   }

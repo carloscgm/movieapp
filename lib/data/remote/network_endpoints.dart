@@ -12,6 +12,7 @@ class NetworkEndpoints {
   static String onTheAirTv = "$_baseUrl/tv/on_the_air";
   static String airingTv = "$_baseUrl/tv/airing_today";
   static String castingTv = "$_baseUrl/tv/";
+  static String castingMovie = "$_baseUrl/movie/";
   static String search = "$_baseUrl/search/movie";
 
   static String API_KEY = "d6a3804b9650e332637a4a35198c4f15";

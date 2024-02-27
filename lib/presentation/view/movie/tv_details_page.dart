@@ -7,6 +7,7 @@ import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
 import 'package:movieapp/presentation/utils/widgets/loading/loading_scaffold_hero.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/carrusel_title_section.dart';
+import 'package:movieapp/presentation/utils/widgets/movies/rounded_image_item.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/title_chip_section.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/vote_section.dart';
 import 'package:movieapp/presentation/view/movie/bloc/movie_bloc.dart';
@@ -37,12 +38,13 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
     return BlocBuilder<MovieBloc, MovieState>(builder: (context, state) {
       if (state.tvDetails != null &&
           widget.id == state.tvDetails!.id &&
-          state.tvDetailsCasting != null &&
-          state.tvDetailsCasting!.id == widget.id) {
+          state.detailsCasting != null &&
+          state.detailsCasting!.id == widget.id) {
         return Scaffold(
           body: Column(
             children: [
               CarruselAndTitle(
+                  loading: false,
                   id: state.tvDetails!.id,
                   title: state.tvDetails!.name,
                   backdropPath: state.tvDetails!.backdropPath,
@@ -56,7 +58,7 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
               ),
               const SizedBox(height: AppDimens.mediumMargin),
               Expanded(
-                  child: TabSection(state.tvDetails!, state.tvDetailsCasting!)),
+                  child: TabSection(state.tvDetails!, state.detailsCasting!)),
             ],
           ),
           floatingActionButton: (state.tvDetails!.homepage.isEmpty)
@@ -185,63 +187,6 @@ class _SecondSection extends StatelessWidget {
             subtitle: 'Episodios: ${myTv.seasons[index].episodeCount}',
           );
         },
-      ),
-    );
-  }
-}
-
-class CustomSeasonSelector extends StatelessWidget {
-  final String urlImage;
-  final String title;
-  final String subtitle;
-  const CustomSeasonSelector({
-    super.key,
-    required this.urlImage,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: AppStyles.getDecorationPoster(),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            urlImage.isNotEmpty
-                ? CachedNetworkImage(
-                    imageUrl: urlImage,
-                    fit: BoxFit.fill,
-                  )
-                : Container(
-                    color: Colors.grey[200],
-                  ),
-            Container(
-              color: Colors.black38.withOpacity(0.5),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    subtitle,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
       ),
     );
   }
