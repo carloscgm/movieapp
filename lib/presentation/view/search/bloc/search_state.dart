@@ -24,5 +24,5 @@ class SearchBlocState extends Equatable {
       );
 
   @override
-  List<Object> get props => [lastPageSearched, query, searchResult];
+  List<Object> get props => [lastPageSearched, query, searchResult, lastSearches];
 }

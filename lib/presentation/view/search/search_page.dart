@@ -44,8 +44,16 @@ class _SearchPageState extends State<SearchPage>
                     return ListView.builder(
                       itemCount: state.lastSearches.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(state.lastSearches[index]),
+                        return GestureDetector(
+                          onTap: () {
+                            showSearch(
+                                context: context,
+                                delegate: SearchMovieDelegate(),
+                                query: state.lastSearches[index]);
+                          },
+                          child: ListTile(
+                            title: Text(state.lastSearches[index]),
+                          ),
                         );
                       },
                     );

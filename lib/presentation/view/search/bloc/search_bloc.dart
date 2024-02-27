@@ -15,10 +15,9 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
         List<MovieModel> listResult =
             await searchUseCase.searchByQuery(event.queryName, 1);
         emit(state.copyWith(
-          searchResult: listResult,
+            searchResult: listResult,
             lastPageSearched: 1,
-            query: event.queryName
-        ));
+            query: event.queryName));
       } else {
         if (state.lastPageSearched < event.page) {
           List<MovieModel> listResult =
@@ -39,11 +38,11 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
       }
     });
     on<CleanSearch>((event, emit) async {
-      emit(state.copyWith(
-          searchResult: [], lastPageSearched: 0, query: ''));
+      emit(state.copyWith(searchResult: [], lastPageSearched: 0, query: ''));
     });
     on<AddSearched>((event, emit) async {
-      List<String> currentSearches = state.lastSearches;
+      List<String> currentSearches = [];
+      currentSearches.addAll(state.lastSearches);
       currentSearches.add(event.searched);
       emit(state.copyWith(lastSearches: currentSearches));
     });
@@ -58,6 +57,8 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
   }
 
   void addNewSearched(String search) {
-    add(AddSearched(searched: search));
+    if (search.isNotEmpty) {
+      add(AddSearched(searched: search));
+    }
   }
 }

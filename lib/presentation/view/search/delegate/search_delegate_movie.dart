@@ -22,12 +22,16 @@ class SearchMovieDelegate extends SearchDelegate {
         if (newQuery.isEmpty) return;
         _currentPage = 1;
         context.read<SearchBloc>().searchNextPage(newQuery, _currentPage);
+        
       },
     );
   }
 
   @override
   String? get searchFieldLabel => 'Nombra una película';
+
+  @override
+  TextStyle? get searchFieldStyle => const TextStyle(color: Colors.black);
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -37,6 +41,7 @@ class SearchMovieDelegate extends SearchDelegate {
         child: IconButton(
             onPressed: () {
               context.read<SearchBloc>().clean();
+              query = '';
               _currentPage = 1;
             },
             icon: const Icon(Icons.clear)),

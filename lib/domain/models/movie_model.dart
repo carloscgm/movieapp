@@ -79,7 +79,7 @@ class MovieModel extends MovieEntity implements PostableItem {
         originalTitle: json["original_title"],
         overview: json["overview"] ?? '',
         popularity: json["popularity"]?.toDouble(),
-        posterPath: 'https://image.tmdb.org/t/p/w500${json["poster_path"]}',
+        posterPath: json["poster_path"] != null ? 'https://image.tmdb.org/t/p/w500${json["poster_path"]}' : '',
         releaseDate: json["release_date"] != null &&
                 json["release_date"].toString().isNotEmpty
             ? DateTime.parse(json["release_date"])

@@ -72,6 +72,7 @@ class _FullScreenMovieListPageState extends State<FullScreenMovieListPage> {
                   loading = false;
                   splitMoviesInColumns();
                   return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _customColum(_column1List, responsive.height * 0.05,

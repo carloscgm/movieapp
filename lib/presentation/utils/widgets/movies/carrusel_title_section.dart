@@ -32,6 +32,7 @@ class CarruselAndTitle extends StatelessWidget {
                 child: backdropPath.isNotEmpty
                     ? CachedNetworkImage(
                         imageUrl: backdropPath,
+                        fit: BoxFit.fill,
                         width: responsive.width,
                         height: responsive.width * 0.56,
                       )
