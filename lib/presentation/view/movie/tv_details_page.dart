@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
 import 'package:movieapp/domain/models/tv_detail_model.dart';
+import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
 import 'package:movieapp/presentation/utils/widgets/loading/loading_scaffold_hero.dart';
@@ -54,7 +55,7 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
               VoteSection(
                 voteAverage: state.tvDetails!.voteAverage,
                 voteCount: state.tvDetails!.voteCount,
-                text: 'Califica esta serie',
+                text: AppLocalizations.of(context)!.vote_tv,
               ),
               const SizedBox(height: AppDimens.mediumMargin),
               Expanded(
@@ -67,11 +68,11 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
                   onPressed: () {
                     _launchURL(state.tvDetails!.homepage);
                   },
-                  label: const Row(
+                  label: Row(
                     children: [
-                      Icon(Icons.play_circle_outline_outlined),
-                      SizedBox(width: 5),
-                      Text('Ver Serie')
+                      const Icon(Icons.play_circle_outline_outlined),
+                      const SizedBox(width: 5),
+                      Text(AppLocalizations.of(context)!.floating_button_tv)
                     ],
                   )),
         );
@@ -103,20 +104,20 @@ class TabSection extends StatelessWidget {
         length: 3,
         child: Column(
           children: [
-            const TabBar(tabs: [
+            TabBar(tabs: [
               Tab(
                   child: Text(
-                'Acerca de',
+                AppLocalizations.of(context)!.about,
                 maxLines: 1,
               )),
               Tab(
                   child: Text(
-                'Temporadas',
+                AppLocalizations.of(context)!.seasons,
                 maxLines: 1,
               )),
               Tab(
                   child: Text(
-                'Reparto',
+                AppLocalizations.of(context)!.casting,
                 maxLines: 1,
               )),
             ]),
@@ -184,7 +185,8 @@ class _SecondSection extends StatelessWidget {
           return CustomSeasonSelector(
             urlImage: myTv.seasons[index].posterPath!,
             title: myTv.seasons[index].name,
-            subtitle: 'Episodios: ${myTv.seasons[index].episodeCount}',
+            subtitle:
+                '${AppLocalizations.of(context)!.episode} ${myTv.seasons[index].episodeCount}',
           );
         },
       ),
@@ -209,23 +211,23 @@ class _FirstSection extends StatelessWidget {
             child: Text(
               myTv.overview.isNotEmpty
                   ? myTv.overview
-                  : 'Sin descripción disponible',
+                  : AppLocalizations.of(context)!.no_description,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           ChipTitleSection(
-            title: 'Géneros',
+            title: AppLocalizations.of(context)!.genres,
             chipListNames: myTv.genres.map((e) => e.name).toList(),
           ),
           const SizedBox(height: AppDimens.smallMargin),
           ChipTitleSection(
-            title: 'Redes',
+            title: AppLocalizations.of(context)!.nets,
             chipListNames: myTv.networks.map((e) => e.name).toList(),
           ),
           const SizedBox(height: AppDimens.smallMargin),
           chapterSection(
             context,
-            'Último episodio',
+            AppLocalizations.of(context)!.last_episode,
             myTv.lastEpisodeToAir.name,
             '${myTv.lastEpisodeToAir.seasonNumber}x${myTv.lastEpisodeToAir.episodeNumber}',
             '${myTv.lastEpisodeToAir.airDate.day}-${myTv.lastEpisodeToAir.airDate.month}-${myTv.lastEpisodeToAir.airDate.year}',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/domain/models/movie_detail_casting_model.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
+import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/utils/widgets/loading/loading_scaffold_hero.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/carrusel_title_section.dart';
@@ -55,19 +56,19 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   VoteSection(
                     voteAverage: state.movieDetails!.voteAverage,
                     voteCount: state.movieDetails!.voteCount,
-                    text: 'Califica esta película',
+                    text: AppLocalizations.of(context)!.vote_movie,
                   ),
                   const SizedBox(height: AppDimens.mediumMargin),
                   Description(myMovie: state.movieDetails!),
                   const SizedBox(height: AppDimens.mediumMargin),
                   ChipTitleSection(
-                    title: 'Géneros',
+                    title: AppLocalizations.of(context)!.genres,
                     chipListNames:
                         state.movieDetails!.genres.map((e) => e.name).toList(),
                   ),
                   const SizedBox(height: AppDimens.mediumMargin),
                   ChipTitleSection(
-                    title: 'Productoras',
+                    title: AppLocalizations.of(context)!.product,
                     chipListNames: state.movieDetails!.productionCompanies
                         .map((e) => e.name)
                         .toList(),
@@ -85,11 +86,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                     onPressed: () {
                       _launchURL(state.movieDetails!.homepage);
                     },
-                    label: const Row(
+                    label: Row(
                       children: [
-                        Icon(Icons.play_circle_outline_outlined),
-                        SizedBox(width: 5),
-                        Text('Ver película')
+                        const Icon(Icons.play_circle_outline_outlined),
+                        const SizedBox(width: 5),
+                        Text(
+                            AppLocalizations.of(context)!.floating_button_movie)
                       ],
                     )),
           );
@@ -130,7 +132,7 @@ class CastingSection extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: AppDimens.mediumMargin),
             child: Text(
-              'Casting',
+              AppLocalizations.of(context)!.casting,
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
@@ -175,13 +177,13 @@ class Description extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Descripción',
+            AppLocalizations.of(context)!.description,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 5),
           Text(
             _myMovie.overview.isEmpty
-                ? 'Sin descripción disponible'
+                ? AppLocalizations.of(context)!.no_description
                 : _myMovie.overview,
             style: Theme.of(context).textTheme.bodyMedium,
           ),

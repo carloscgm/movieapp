@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -66,7 +67,7 @@ class CarruselAndTitle extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(releaseDate != null
-                    ? 'Estreno: ${releaseDate?.day}-${releaseDate?.month}-${releaseDate?.year}'
+                    ? '${AppLocalizations.of(context)!.release_date} ${releaseDate?.day}-${releaseDate?.month}-${releaseDate?.year}'
                     : ''),
               ),
             ),

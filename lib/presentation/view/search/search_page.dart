@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/view/search/bloc/search_bloc.dart';
 import 'package:movieapp/presentation/view/search/delegate/search_delegate_movie.dart';
@@ -35,7 +36,7 @@ class _SearchPageState extends State<SearchPage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Tus últimas buscadas',
+                AppLocalizations.of(context)!.last_searchs,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(

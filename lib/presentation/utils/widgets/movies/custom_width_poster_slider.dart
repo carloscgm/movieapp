@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
+import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/navigation/navigation_routes.dart';
 import 'package:movieapp/presentation/utils/constants/app_colors.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
@@ -28,7 +29,7 @@ class CustomWidthPosterSlider extends StatelessWidget {
           margin: const EdgeInsets.only(
               left: AppDimens.mediumMargin, top: AppDimens.mediumMargin),
           child: Text(
-            'Películas por llegar',
+            AppLocalizations.of(context)!.upcoming,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),

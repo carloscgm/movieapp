@@ -71,4 +71,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get action_retry => 'Retry';
+
+  @override
+  String get floating_button_movie => 'Watch movie';
+
+  @override
+  String get floating_button_tv => 'Watch serie';
+
+  @override
+  String get vote_movie => 'Vote this movie';
+
+  @override
+  String get vote_tv => 'Vote this serie';
+
+  @override
+  String get episode => 'Episodes:';
+
+  @override
+  String get no_description => 'no description available';
+
+  @override
+  String get last_episode => 'Last episode';
+
+  @override
+  String get genres => 'Genres';
+
+  @override
+  String get nets => 'Nets';
+
+  @override
+  String get last_searchs => 'Your last searches';
+
+  @override
+  String get name_a_movie => 'Name a movie';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get seasons => 'Seasons';
+
+  @override
+  String get casting => 'Casting';
+
+  @override
+  String get popular_movies => 'Populr movies';
+
+  @override
+  String get toprated_movies => 'Top Rated movies';
+
+  @override
+  String get toprated_tv => 'Top Rated series';
+
+  @override
+  String get popular_tv => 'Popular series';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get product => 'Production companies';
+
+  @override
+  String get upcoming => 'Upcoming movies';
+
+  @override
+  String get release_date => 'Release date:';
 }
