@@ -10,12 +10,10 @@ import 'package:movieapp/presentation/view/search/bloc/search_bloc.dart';
 void main() {
   AppModules().setup(); // Setup dependency injection
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context) => inject<SearchBloc>()),
-      BlocProvider(create: (context) => inject<MovieBloc>()),
-    ],
-    child: const MyApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (context) => inject<SearchBloc>()),
+    BlocProvider(create: (context) => inject<MovieBloc>()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

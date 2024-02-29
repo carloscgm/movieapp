@@ -20,6 +20,7 @@ class LoadingScaffoldHero extends StatelessWidget {
       body: Column(children: [
         CarruselAndTitle(
           id: id,
+          loading: true,
           title: title,
           backdropPath: backdropPath,
           posterPath: posterPath,

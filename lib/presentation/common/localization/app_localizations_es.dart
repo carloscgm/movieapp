@@ -71,4 +71,70 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get action_retry => 'Reintentar';
+
+  @override
+  String get floating_button_movie => 'Ver película';
+
+  @override
+  String get floating_button_tv => 'Ver serie';
+
+  @override
+  String get vote_movie => 'Califica esta película';
+
+  @override
+  String get vote_tv => 'Califica esta serie';
+
+  @override
+  String get episode => 'Episodios:';
+
+  @override
+  String get no_description => 'Sin descripción disponible';
+
+  @override
+  String get last_episode => 'Último episodio';
+
+  @override
+  String get genres => 'Géneros';
+
+  @override
+  String get nets => 'Redes';
+
+  @override
+  String get last_searchs => 'Tus últimas buscadas';
+
+  @override
+  String get name_a_movie => 'Nombra una película';
+
+  @override
+  String get about => 'Acerca de';
+
+  @override
+  String get seasons => 'Temporadas';
+
+  @override
+  String get casting => 'Reparto';
+
+  @override
+  String get popular_movies => 'Películas populares';
+
+  @override
+  String get toprated_movies => 'Películas Mejor valoradas';
+
+  @override
+  String get toprated_tv => 'Series Mejor valoradas';
+
+  @override
+  String get popular_tv => 'Popular';
+
+  @override
+  String get description => 'Descripción';
+
+  @override
+  String get product => 'Productoras';
+
+  @override
+  String get upcoming => 'Películas por llegar';
+
+  @override
+  String get release_date => 'Estreno:';
 }

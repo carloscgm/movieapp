@@ -46,6 +46,12 @@ class FetchTVDetailCasting extends MovieEvent {
   FetchTVDetailCasting({required this.id});
 }
 
+class FetchMovieDetailCasting extends MovieEvent {
+  final int id;
+
+  FetchMovieDetailCasting({required this.id});
+}
+
 class FetchNext extends MovieEvent {
   final int page;
   final MovieListType type;

@@ -3,6 +3,7 @@ import 'package:movieapp/data/remote/http_client.dart';
 import 'package:movieapp/data/remote/network_endpoints.dart';
 import 'package:movieapp/domain/entities/posterable_item.dart';
 import 'package:movieapp/domain/interfaces/repositories/remote/movie_remote_interface.dart';
+import 'package:movieapp/domain/models/movie_detail_casting_model.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
@@ -243,6 +244,18 @@ class MovieRemoteImpl implements MovieRemoteInterface {
   }
 
   @override
+  Future<MovieDetailCastingModel> getMovieDetailsCasting(int idMovie) async {
+    try {
+      dynamic response = await _httpClient.dio
+          .get('${NetworkEndpoints.castingMovie}$idMovie/credits');
+
+      return MovieDetailCastingModel.fromJson(response.data);
+    } catch (e) {
+      throw RemoteErrorMapper.getException(e);
+    }
+  }
+
+  @override
   Future<List<PostableItem>> getNext(int page, MovieListType type) async {
     try {
       dynamic response = await _httpClient.dio.get(
@@ -253,12 +266,12 @@ class MovieRemoteImpl implements MovieRemoteInterface {
       if (type.status == TypeListMovie.MOVIE_POPULAR ||
           type.status == TypeListMovie.MOVIE_TOPRATED) {
         return response.data['results']
-          .map<MovieModel>((data) => MovieModel.fromJson(data))
-          .toList();
+            .map<MovieModel>((data) => MovieModel.fromJson(data))
+            .toList();
       } else {
         return response.data['results']
-          .map<TvModel>((data) => TvModel.fromJson(data))
-          .toList();
+            .map<TvModel>((data) => TvModel.fromJson(data))
+            .toList();
       }
     } catch (e) {
       throw RemoteErrorMapper.getException(e);

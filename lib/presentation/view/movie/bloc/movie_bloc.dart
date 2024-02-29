@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movieapp/domain/entities/posterable_item.dart';
 import 'package:movieapp/domain/interfaces/usecases/movie_use_case_interface.dart';
+import 'package:movieapp/domain/models/movie_detail_casting_model.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
@@ -26,6 +27,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     on<FetchTvPopular>(blocFetchTVPopular);
     on<FetchTVDetail>(blocFetchTVDetails);
     on<FetchTVDetailCasting>(blocFetchTVDetailsCasting);
+    on<FetchMovieDetailCasting>(blocFetchMovieDetailsCasting);
     on<FetchNext>(blocFetchNext);
     on<MoveMoviesToNext>(blocMoveMoviestoNext);
   }
@@ -62,7 +64,14 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       FetchTVDetailCasting event, Emitter<MovieState> emit) async {
     TvDetailCastingModel result =
         await movieUseCase.getTvDetailCasting(event.id);
-    emit(state.copyWith(tvDetailsCasting: result));
+    emit(state.copyWith(detailsCasting: result));
+  }
+
+  void blocFetchMovieDetailsCasting(
+      FetchMovieDetailCasting event, Emitter<MovieState> emit) async {
+    MovieDetailCastingModel result =
+        await movieUseCase.getMovieDetailCasting(event.id);
+    emit(state.copyWith(movieDetailCasting: result));
   }
 
   void blocFetchTVDetails(FetchTVDetail event, Emitter<MovieState> emit) async {
@@ -145,6 +154,10 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
   void fetchTVDetailCasting(int id) {
     add(FetchTVDetailCasting(id: id));
+  }
+
+  void fetchMovieDetailCasting(int id) {
+    add(FetchMovieDetailCasting(id: id));
   }
 
   void fetchNext(int page, MovieListType type) {

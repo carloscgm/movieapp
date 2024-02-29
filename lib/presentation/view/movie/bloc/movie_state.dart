@@ -8,7 +8,8 @@ class MovieState extends Equatable {
   final List<TvModel> popularTVList;
   final TvDetailModel? tvDetails;
   final MovieDetailModel? movieDetails;
-  final TvDetailCastingModel? tvDetailsCasting;
+  final TvDetailCastingModel? detailsCasting;
+  final MovieDetailCastingModel? movieDetailCasting;
   final List<PostableItem> nextList;
   const MovieState({
     this.upcomingList = const [],
@@ -19,7 +20,8 @@ class MovieState extends Equatable {
     this.nextList = const [],
     this.tvDetails,
     this.movieDetails,
-    this.tvDetailsCasting,
+    this.detailsCasting,
+    this.movieDetailCasting,
   });
 
   @override
@@ -31,8 +33,9 @@ class MovieState extends Equatable {
         popularTVList,
         tvDetails,
         movieDetails,
-        tvDetailsCasting,
+        detailsCasting,
         nextList,
+        movieDetailCasting,
       ];
 
   MovieState copyWith({
@@ -44,7 +47,8 @@ class MovieState extends Equatable {
     List<PostableItem>? nextList,
     TvDetailModel? tvDetails,
     MovieDetailModel? movieDetails,
-    TvDetailCastingModel? tvDetailsCasting,
+    TvDetailCastingModel? detailsCasting,
+    MovieDetailCastingModel? movieDetailCasting,
   }) =>
       MovieState(
         upcomingList: upcomingList ?? this.upcomingList,
@@ -54,7 +58,8 @@ class MovieState extends Equatable {
         popularTVList: popularTVList ?? this.popularTVList,
         tvDetails: tvDetails ?? this.tvDetails,
         movieDetails: movieDetails ?? this.movieDetails,
-        tvDetailsCasting: tvDetailsCasting ?? this.tvDetailsCasting,
+        detailsCasting: detailsCasting ?? this.detailsCasting,
         nextList: nextList ?? this.nextList,
+        movieDetailCasting: movieDetailCasting ?? this.movieDetailCasting,
       );
 }

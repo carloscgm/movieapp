@@ -1,3 +1,4 @@
+import 'package:movieapp/domain/models/movie_detail_casting_model.dart';
 import 'package:movieapp/domain/models/movie_detail_model.dart';
 import 'package:movieapp/domain/models/movie_model.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
@@ -32,6 +33,7 @@ class MemoryCache {
   Map<int, List<TvModel>> tvPopular = {};
   Map<int, TvDetailModel> tvDetails = {};
   Map<int, TvDetailCastingModel> tvDetailsCasting = {};
+  Map<int, MovieDetailCastingModel> movieDetailsCasting = {};
 
   clearAll() {
     // Clear all data

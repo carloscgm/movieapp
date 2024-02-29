@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/domain/models/tv_detail_casting_model.dart';
 import 'package:movieapp/domain/models/tv_detail_model.dart';
+import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
 import 'package:movieapp/presentation/utils/widgets/loading/loading_scaffold_hero.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/carrusel_title_section.dart';
+import 'package:movieapp/presentation/utils/widgets/movies/rounded_image_item.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/title_chip_section.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/vote_section.dart';
 import 'package:movieapp/presentation/view/movie/bloc/movie_bloc.dart';
@@ -37,12 +39,13 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
     return BlocBuilder<MovieBloc, MovieState>(builder: (context, state) {
       if (state.tvDetails != null &&
           widget.id == state.tvDetails!.id &&
-          state.tvDetailsCasting != null &&
-          state.tvDetailsCasting!.id == widget.id) {
+          state.detailsCasting != null &&
+          state.detailsCasting!.id == widget.id) {
         return Scaffold(
           body: Column(
             children: [
               CarruselAndTitle(
+                  loading: false,
                   id: state.tvDetails!.id,
                   title: state.tvDetails!.name,
                   backdropPath: state.tvDetails!.backdropPath,
@@ -52,11 +55,11 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
               VoteSection(
                 voteAverage: state.tvDetails!.voteAverage,
                 voteCount: state.tvDetails!.voteCount,
-                text: 'Califica esta serie',
+                text: AppLocalizations.of(context)!.vote_tv,
               ),
               const SizedBox(height: AppDimens.mediumMargin),
               Expanded(
-                  child: TabSection(state.tvDetails!, state.tvDetailsCasting!)),
+                  child: TabSection(state.tvDetails!, state.detailsCasting!)),
             ],
           ),
           floatingActionButton: (state.tvDetails!.homepage.isEmpty)
@@ -65,11 +68,11 @@ class _TvDetailsPageState extends State<TvDetailsPage> {
                   onPressed: () {
                     _launchURL(state.tvDetails!.homepage);
                   },
-                  label: const Row(
+                  label: Row(
                     children: [
-                      Icon(Icons.play_circle_outline_outlined),
-                      SizedBox(width: 5),
-                      Text('Ver Serie')
+                      const Icon(Icons.play_circle_outline_outlined),
+                      const SizedBox(width: 5),
+                      Text(AppLocalizations.of(context)!.floating_button_tv)
                     ],
                   )),
         );
@@ -101,20 +104,20 @@ class TabSection extends StatelessWidget {
         length: 3,
         child: Column(
           children: [
-            const TabBar(tabs: [
+            TabBar(tabs: [
               Tab(
                   child: Text(
-                'Acerca de',
+                AppLocalizations.of(context)!.about,
                 maxLines: 1,
               )),
               Tab(
                   child: Text(
-                'Temporadas',
+                AppLocalizations.of(context)!.seasons,
                 maxLines: 1,
               )),
               Tab(
                   child: Text(
-                'Reparto',
+                AppLocalizations.of(context)!.casting,
                 maxLines: 1,
               )),
             ]),
@@ -182,66 +185,10 @@ class _SecondSection extends StatelessWidget {
           return CustomSeasonSelector(
             urlImage: myTv.seasons[index].posterPath!,
             title: myTv.seasons[index].name,
-            subtitle: 'Episodios: ${myTv.seasons[index].episodeCount}',
+            subtitle:
+                '${AppLocalizations.of(context)!.episode} ${myTv.seasons[index].episodeCount}',
           );
         },
-      ),
-    );
-  }
-}
-
-class CustomSeasonSelector extends StatelessWidget {
-  final String urlImage;
-  final String title;
-  final String subtitle;
-  const CustomSeasonSelector({
-    super.key,
-    required this.urlImage,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: AppStyles.getDecorationPoster(),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            urlImage.isNotEmpty
-                ? CachedNetworkImage(
-                    imageUrl: urlImage,
-                    fit: BoxFit.fill,
-                  )
-                : Container(
-                    color: Colors.grey[200],
-                  ),
-            Container(
-              color: Colors.black38.withOpacity(0.5),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    subtitle,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
       ),
     );
   }
@@ -264,23 +211,23 @@ class _FirstSection extends StatelessWidget {
             child: Text(
               myTv.overview.isNotEmpty
                   ? myTv.overview
-                  : 'Sin descripción disponible',
+                  : AppLocalizations.of(context)!.no_description,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           ChipTitleSection(
-            title: 'Géneros',
+            title: AppLocalizations.of(context)!.genres,
             chipListNames: myTv.genres.map((e) => e.name).toList(),
           ),
           const SizedBox(height: AppDimens.smallMargin),
           ChipTitleSection(
-            title: 'Redes',
+            title: AppLocalizations.of(context)!.nets,
             chipListNames: myTv.networks.map((e) => e.name).toList(),
           ),
           const SizedBox(height: AppDimens.smallMargin),
           chapterSection(
             context,
-            'Último episodio',
+            AppLocalizations.of(context)!.last_episode,
             myTv.lastEpisodeToAir.name,
             '${myTv.lastEpisodeToAir.seasonNumber}x${myTv.lastEpisodeToAir.episodeNumber}',
             '${myTv.lastEpisodeToAir.airDate.day}-${myTv.lastEpisodeToAir.airDate.month}-${myTv.lastEpisodeToAir.airDate.year}',

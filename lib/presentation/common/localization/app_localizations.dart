@@ -224,6 +224,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get action_retry;
+
+  /// No description provided for @floating_button_movie.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch movie'**
+  String get floating_button_movie;
+
+  /// No description provided for @floating_button_tv.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch serie'**
+  String get floating_button_tv;
+
+  /// No description provided for @vote_movie.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote this movie'**
+  String get vote_movie;
+
+  /// No description provided for @vote_tv.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote this serie'**
+  String get vote_tv;
+
+  /// No description provided for @episode.
+  ///
+  /// In en, this message translates to:
+  /// **'Episodes:'**
+  String get episode;
+
+  /// No description provided for @no_description.
+  ///
+  /// In en, this message translates to:
+  /// **'no description available'**
+  String get no_description;
+
+  /// No description provided for @last_episode.
+  ///
+  /// In en, this message translates to:
+  /// **'Last episode'**
+  String get last_episode;
+
+  /// No description provided for @genres.
+  ///
+  /// In en, this message translates to:
+  /// **'Genres'**
+  String get genres;
+
+  /// No description provided for @nets.
+  ///
+  /// In en, this message translates to:
+  /// **'Nets'**
+  String get nets;
+
+  /// No description provided for @last_searchs.
+  ///
+  /// In en, this message translates to:
+  /// **'Your last searches'**
+  String get last_searchs;
+
+  /// No description provided for @name_a_movie.
+  ///
+  /// In en, this message translates to:
+  /// **'Name a movie'**
+  String get name_a_movie;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @seasons.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasons'**
+  String get seasons;
+
+  /// No description provided for @casting.
+  ///
+  /// In en, this message translates to:
+  /// **'Casting'**
+  String get casting;
+
+  /// No description provided for @popular_movies.
+  ///
+  /// In en, this message translates to:
+  /// **'Populr movies'**
+  String get popular_movies;
+
+  /// No description provided for @toprated_movies.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Rated movies'**
+  String get toprated_movies;
+
+  /// No description provided for @toprated_tv.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Rated series'**
+  String get toprated_tv;
+
+  /// No description provided for @popular_tv.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular series'**
+  String get popular_tv;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @product.
+  ///
+  /// In en, this message translates to:
+  /// **'Production companies'**
+  String get product;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming movies'**
+  String get upcoming;
+
+  /// No description provided for @release_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Release date:'**
+  String get release_date;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

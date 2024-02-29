@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/utils/constants/app_dimens.dart';
 import 'package:movieapp/presentation/utils/constants/type_movie_list.dart';
 import 'package:movieapp/presentation/utils/widgets/movies/custom_width_poster_slider.dart';
@@ -30,49 +31,49 @@ class _MovieListPageState extends State<MovieListPage>
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<MovieBloc, MovieState>(
-            builder: (context, state) {
-              if (state.popularMovieList.isNotEmpty &&
-                  state.topRatedMovieList.isNotEmpty &&
-                  state.popularTVList.isNotEmpty &&
-                  state.topRatedTVList.isNotEmpty &&
-                  state.upcomingList.isNotEmpty) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CustomWidthPosterSlider(movieList: state.upcomingList),
-                      const SizedBox(height: AppDimens.mediumMargin),
-                      HorizontalListViewMovies(
-                          list: state.popularMovieList,
-                          title: 'Películas populares',
-                          listType:
-                              MovieListType(status: TypeListMovie.MOVIE_POPULAR)),
-                      HorizontalListViewMovies(
-                        list: state.topRatedMovieList,
-                        title: 'Películas Mejor valoradas',
+          builder: (context, state) {
+            if (state.popularMovieList.isNotEmpty &&
+                state.topRatedMovieList.isNotEmpty &&
+                state.popularTVList.isNotEmpty &&
+                state.topRatedTVList.isNotEmpty &&
+                state.upcomingList.isNotEmpty) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CustomWidthPosterSlider(movieList: state.upcomingList),
+                    const SizedBox(height: AppDimens.mediumMargin),
+                    HorizontalListViewMovies(
+                        list: state.popularMovieList,
+                        title: AppLocalizations.of(context)!.popular_movies,
                         listType:
-                            MovieListType(status: TypeListMovie.MOVIE_TOPRATED),
-                      ),
-                      HorizontalListViewMovies(
-                        list: state.topRatedTVList,
-                        title: 'Series Mejor valoradas',
-                        listType:
-                            MovieListType(status: TypeListMovie.TV_TOPRATED),
-                      ),
-                      HorizontalListViewMovies(
-                        list: state.popularTVList,
-                        title: 'Popular',
-                        listType: MovieListType(status: TypeListMovie.TV_POPULAR),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
+                            MovieListType(status: TypeListMovie.MOVIE_POPULAR)),
+                    HorizontalListViewMovies(
+                      list: state.topRatedMovieList,
+                      title: AppLocalizations.of(context)!.toprated_movies,
+                      listType:
+                          MovieListType(status: TypeListMovie.MOVIE_TOPRATED),
+                    ),
+                    HorizontalListViewMovies(
+                      list: state.topRatedTVList,
+                      title: AppLocalizations.of(context)!.toprated_tv,
+                      listType:
+                          MovieListType(status: TypeListMovie.TV_TOPRATED),
+                    ),
+                    HorizontalListViewMovies(
+                      list: state.popularTVList,
+                      title: AppLocalizations.of(context)!.popular_tv,
+                      listType: MovieListType(status: TypeListMovie.TV_POPULAR),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }
