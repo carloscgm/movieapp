@@ -23,6 +23,9 @@ class _AboutPageState extends State<AboutPage>
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            width: double.infinity,
+          ),
           Padding(
             padding: const EdgeInsets.all(AppDimens.mediumMargin),
             child: Text(
