@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/di/app_modules.dart';
 import 'package:movieapp/presentation/common/localization/app_localizations.dart';
 import 'package:movieapp/presentation/navigation/navigation_routes.dart';
+import 'package:movieapp/presentation/utils/constants/app_scroll_behavior.dart';
 import 'package:movieapp/presentation/utils/constants/app_styles.dart';
 import 'package:movieapp/presentation/view/movie/bloc/movie_bloc.dart';
 import 'package:movieapp/presentation/view/search/bloc/search_bloc.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      scrollBehavior: AppScrollBehavior(),
       title: 'Movie App',
       theme: AppStyles.appTheme,
       darkTheme: AppStyles.appDarkTheme,
