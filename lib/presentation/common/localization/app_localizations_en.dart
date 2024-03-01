@@ -115,7 +115,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get casting => 'Casting';
 
   @override
-  String get popular_movies => 'Populr movies';
+  String get popular_movies => 'Popular movies';
 
   @override
   String get toprated_movies => 'Top Rated movies';

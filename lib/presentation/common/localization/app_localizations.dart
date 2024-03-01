@@ -312,7 +312,7 @@ abstract class AppLocalizations {
   /// No description provided for @popular_movies.
   ///
   /// In en, this message translates to:
-  /// **'Populr movies'**
+  /// **'Popular movies'**
   String get popular_movies;
 
   /// No description provided for @toprated_movies.
